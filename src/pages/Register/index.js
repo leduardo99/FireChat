@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { StatusBar, KeyboardAvoidingView } from 'react-native';
+
+import Auth from '~/services/firebase/Auth';
 
 import ButtonBackHandler from '~/components/ButtonBackHandler';
 
@@ -17,32 +19,65 @@ import {
 
 import logo from '../../logo.png';
 
-const Register = ({ navigation }) => (
-  <Container
-    source={{
-      uri: 'https://s3-sa-east-1.amazonaws.com/rocketseat-cdn/background.png',
-    }}
-    resizeMode="cover">
-    <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
-    <KeyboardAvoidingView style={{ flex: 1 }}>
-      <Form>
-        <Logo source={logo} resizeMode="cover" />
-        <Input placeholder="Usuário" />
-        <Input placeholder="E-mail" />
-        <Input placeholder="Senha" secureTextEntry />
-        <Input placeholder="Confirmar senha" secureTextEntry />
+const Register = ({ navigation }) => {
+  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
 
-        <Button>
-          <TextButton>Registrar</TextButton>
-        </Button>
+  const handleSubmit = () => {
+    const data = { username, email, password };
 
-        <ButtonLogin onPress={() => navigation.navigate('Login')}>
-          <LoginText>Logar-se</LoginText>
-        </ButtonLogin>
-      </Form>
-    </KeyboardAvoidingView>
-  </Container>
-);
+    Auth.register(data);
+
+    navigation.navigate('Login');
+  };
+
+  return (
+    <Container
+      source={{
+        uri: 'https://s3-sa-east-1.amazonaws.com/rocketseat-cdn/background.png',
+      }}
+      resizeMode="cover">
+      <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
+      <KeyboardAvoidingView style={{ flex: 1 }}>
+        <Form>
+          <Logo source={logo} resizeMode="cover" />
+          <Input
+            placeholder="Usuário"
+            value={username}
+            onChangeText={text => setUsername(text)}
+          />
+          <Input
+            placeholder="E-mail"
+            value={email}
+            onChangeText={text => setEmail(text)}
+          />
+          <Input
+            placeholder="Senha"
+            secureTextEntry
+            value={password}
+            onChangeText={text => setPassword(text)}
+          />
+          <Input
+            placeholder="Confirmar senha"
+            secureTextEntry
+            value={confirmPassword}
+            onChangeText={text => setConfirmPassword(text)}
+          />
+
+          <Button onPress={handleSubmit}>
+            <TextButton>Registrar</TextButton>
+          </Button>
+
+          <ButtonLogin onPress={() => navigation.navigate('Login')}>
+            <LoginText>Logar-se</LoginText>
+          </ButtonLogin>
+        </Form>
+      </KeyboardAvoidingView>
+    </Container>
+  );
+};
 
 Register.navigationOptions = ({ navigation }) => ({
   headerTransparent: true,
