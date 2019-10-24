@@ -26,15 +26,14 @@ export const Input = styled.TextInput`
 `;
 
 export const Button = styled.TouchableOpacity`
+  flex-direction: row;
   width: 300px;
-  height: 35px;
+  height: 45px;
 
   margin-top: 10px;
   background: #7149c1;
 
   border-radius: 5px;
-
-  flex-direction: row;
 
   align-items: center;
   justify-content: center;
@@ -58,6 +57,6 @@ export const RegisterText = styled.Text`
 
 export const Logo = styled.Image`
   height: ${Dimensions.get('window').height * 0.13};
-  margin-vertical: ${Dimensions.get('window').height * 0.1};
+  margin-vertical: ${Dimensions.get('window').height * 0.07};
   width: ${Dimensions.get('window').height * 0.11 * (1950 / 662)};
 `;
